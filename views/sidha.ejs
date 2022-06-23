@@ -1,35 +1,143 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Document</title>
-    <link rel="stylesheet" href="../static/style.css">
-    
+    <link rel="stylesheet" href="../static/style.css" />
+  </head>
 
-</head>
+  <body>
+    <nav>
+      <ul>
+        <li><a href="/">home</a></li>
+        <li><a href="/">about</a></li>
+        <li><a href="/">contact</a></li>
+      </ul>
+    </nav>
+    <div class="containe" style="color: red"></div>
+    <h2>Get this gym membership for 600 - Fill this form now!</h2>
 
-<body>
-  <nav>
-    <ul>
-      <li><a href="/">home</a></li>
-      <li><a href="/">about</a></li>
-      <li><a href="/">contact</a></li>
-    </ul>
-  </nav>
+    <form id="contact" name="myform">
+      
+      <input type="text" name="name" id="name" placeholder="Enter your name" />
+      <input
+        type="email"
+        name="email"
+        id="email"
+        placeholder="Enter your mail"
+      />
+      <input type="text" name="age" id="age" placeholder="Enter your age" />
+      <input
+        type="text"
+        name="gender"
+        id="gender"
+        placeholder="Enter your gender"
+      />
+      <textarea
+        name="address"
+        id="address"
+        cols="30"
+        rows="10"
+        placeholder="Enter your address"
+      ></textarea>
+      <textarea
+        name="more"
+        id="more"
+        cols="30"
+        rows="10"
+        placeholder="More about you.."
+      ></textarea>
+      <button class="btn">Submit</button>
+    </form>
+    <script>
 
-  <h2>Get this gym membership for 600 - Fill this form now!</h2>
+            var name = document.myform.name.value;
+      var x = document.myform.email.value;
+      var gender = document.myform.gender.value;
+      var address = document.myform.address.value;
+      var more = document.myform.more.value;
+      var num = document.getElementById("age").value;
+      var isError=false;
+      var obj={};
+      
+      obj['1'] ='Error in name';
+      obj['2'] ='Error in name';
+      obj['3'] ='Error in name';
+      obj['4'] ='Error in name';
+      console.log('hi out');
 
-  
-    <form action="/" method="post" id="contact" name="myform" >
-        <input type="text" name="name" id="name" placeholder="Enter your name">
-        <input type="email" name="email" id="email" placeholder="Enter your mail">
-        <input type="text" name="age" id="age" placeholder="Enter your age">
-        <input type="text" name="gender" id="gender" placeholder="Enter your gender">
-        <textarea name="address" id="address" cols="30" rows="10" placeholder="Enter your address"></textarea>
-        <textarea name="more" id="more" cols="30" rows="10" placeholder="More about you.."></textarea>
-        <button class="btn" onclick="return valemail();">Submit</button>
-    
-</body>
+
+      document.getElementById('contact').addEventListener('submit',async(e)=>{
+        console.log('hi');
+
+        e.preventDefault();
+
+        const ret=valemail();
+        if(isError=false){
+          await fetch("http://localhost/ ",{
+            method:"POST",
+
+           headers:{
+            'content-type':'application/json'
+           },
+           body:JSON.stringify({name,x,gender,address,more,num})
+          });
+         }
+        else{
+          console.log(document.getElementsByClassName('containe'));
+         for (let index = 0; index < 4; index++) {
+          document.getElementsByClassName('containe')[0].innerText=obj[index];
+          
+         }
+         
+        }
+      })
+
+
+      function valemail() {
+
+        var atpo = x.indexOf("@");
+        var dotpo = x.lastIndexOf(".");
+        console.log('hi111');
+        
+          if (name ==" ") {
+            alert("Name is required");
+           isError=true;
+            
+            return obj['0'] ='Error in name';
+          }
+          if (atpo < 1 || dotpo < atpo + 2 || dotpo + 2 >= x.length) {
+            alert("Please enter a valid e-mail address");
+            console.log('3245t');
+            isError=true;
+            return obj['1'] ='Error in email';
+          }
+          if (isNaN(num)) {
+            alert("Please enter a numeric vlue only");
+            isError=true;
+            return obj['2'] ='Error in num';
+          }
+
+          if (gender == "") {
+            alert("Gender is required");
+            isError=true;
+            return obj['3'] ='Error in name';;
+          }
+          if (address == "") {
+            alert("address is required");
+            isError=true;
+            return obj['4'] ='Error in name';
+          if (more == "") {
+            alert("address is required");
+            isError=true;
+            return obj['5'] ='Error in name';
+          } else {
+            return true;
+          }
+        }
+      }
+    </script>
+  </body>
 </html>
